@@ -19,7 +19,7 @@ export class AuthService {
         this.auth.signInWithEmailAndPassword(correo,password).then((res) => {
           let userCorreo = res.user?.email ? res.user?.email : '';
           localStorage.setItem("correo", userCorreo);
-          this.navCtrl.navigateRoot('');
+          this.navCtrl.navigateRoot('/home');
           console.log(userCorreo);
         }).catch(async (error) => {
           let errorMessage = error.message;
