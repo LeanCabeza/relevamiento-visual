@@ -86,13 +86,15 @@ export class FirebaseService {
 
     async obtenerCosasLindas() {
       try {
-        const snapshot = await this.firestore.collection('cosas_lindas').get().toPromise();
-        if (snapshot) {
-          const cosasLindas = snapshot.docs.map(doc => doc.data());
-          return cosasLindas;
-        } else {
-          throw new Error('El snapshot es undefined');
-        }
+        return this.firestore.collection('cosas_lindas').snapshotChanges().pipe(
+          map(actions => {
+            return actions.map(a => {
+              const data = a.payload.doc.data();
+              const id = a.payload.doc.id;
+              return Object.assign({}, data, { id });
+            });
+          })
+        );
       } catch (error) {
         console.error('Error al obtener las cosas lindas:', error);
         throw error;

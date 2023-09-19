@@ -33,11 +33,9 @@ export class CosasLindasPage implements OnInit {
 
   async obtenerCosasLindas() {
     try {
-      const data = await this.firebaseService.obtenerCosasLindas();
-      if (data) {
-        this.cosasLindas = data;
-        console.log(this.cosasLindas);
-      }
+      (await this.firebaseService.obtenerCosasLindas()).subscribe(cosasLindas => {
+        this.cosasLindas = cosasLindas;
+      });
     } catch (error) {
       console.error('Error al obtener las cosas lindas:', error);
     }
