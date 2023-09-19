@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/servicios/auth.service';
+import { FirebaseService } from 'src/app/servicios/firebase.service';
 
 
 
@@ -16,7 +16,7 @@ export class LoginPage implements OnInit {
   password: FormControl = new FormControl('', [Validators.required, Validators.minLength(6)]);
   showSpinner:boolean = false;
 
-  constructor(private authService:AuthService) { }
+  constructor(private firebaseService:FirebaseService) { }
 
   ngOnInit() {
   }
@@ -26,7 +26,7 @@ export class LoginPage implements OnInit {
     const passL = this.password.value?.toString()
     this.showSpinner=true;
     setTimeout(() => {
-      this.authService.login(correoL,passL);
+      this.firebaseService.login(correoL,passL);
       this.showSpinner=false;
     }, 2000);
   }
@@ -57,9 +57,4 @@ export class LoginPage implements OnInit {
     this.password.setValue(password);
   }
 
-
-  ionViewWillLeave() {
-    this.correo.reset();
-    this.password.reset();
-  }
 }

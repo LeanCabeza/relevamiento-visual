@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import * as moment from 'moment';
+import { FirebaseService } from 'src/app/servicios/firebase.service';
 
 
 @Component({
@@ -9,15 +9,24 @@ import * as moment from 'moment';
 })
 export class CosasLindasPage implements OnInit {
 
-  user: any = null;
-  cosasLindasList: any = [];
-  like: boolean = true;
-  pressedButton: boolean = false;
-
-  constructor() { }
+  currentUserMail: string | null= ""; 
+  constructor(public firebaseService: FirebaseService) { }
 
   ngOnInit() {
+    this.obtenerUsuarioLoggeado();
+  }
 
+  addFoto(){
+    this.firebaseService.guardarRegistro(this.currentUserMail,"x")
+  }
+
+  obtenerUsuarioLoggeado(){
+    this.firebaseService.getUserLogged().subscribe(user => {
+      console.log(user?.email);
+      if (user?.email != null) {
+        this.currentUserMail = user.email 
+      }
+    })
   }
 
 }

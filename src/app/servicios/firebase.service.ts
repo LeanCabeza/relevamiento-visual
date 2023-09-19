@@ -2,23 +2,21 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { NavController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
-import { AngularFireStorage } from '@angular/fire/compat/storage';
-
-
-
+import { AngularFirestore } from '@angular/fire/compat/firestore'; // Importa AngularFirestore
 
 @Injectable({
   providedIn: 'root'
 })
 
-
-export class AuthService {
+export class FirebaseService {
 
   constructor(public auth: AngularFireAuth,
               public navCtrl: NavController, 
               public alertController: AlertController,
+              private firestore: AngularFirestore
               ) { }
 
+   myDate = new Date();
 
   login(correo:any, password:any){
         this.auth.signInWithEmailAndPassword(correo,password).then((res) => {
@@ -49,6 +47,29 @@ export class AuthService {
         buttons: ['OK'],
       });
       await alert.present();
+    }
+
+    async guardarRegistro(email?: any,foto?: any) {
+
+      let fotoData = {
+        email: email,
+        foto: foto,
+        fecha: this.myDate.toLocaleDateString() + " " + this.myDate.toLocaleTimeString()
+      }
+      
+      try {
+        const result = await this.firestore.collection('cosas_lindas').add(fotoData);
+        console.log('Registro guardado con ID: ', result.id);
+        this.presentAlert("Exito","'Registro guardado");
+        return result.id;
+      } catch (error) {
+        this.presentAlert("Error","Error al guardar foto");
+        throw error;
+      }
+    }
+
+    getUserLogged(){
+      return this.auth.authState;
     }
     
   }
