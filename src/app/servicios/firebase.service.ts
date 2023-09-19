@@ -2,7 +2,11 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { NavController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
-import { AngularFirestore } from '@angular/fire/compat/firestore'; // Importa AngularFirestore
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Camera, CameraResultType } from '@capacitor/camera';
+import { map } from 'rxjs/operators'; // Importa el operador map
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +21,7 @@ export class FirebaseService {
               ) { }
 
    myDate = new Date();
+   cosasLindas: any[] = [];
 
   login(correo:any, password:any){
         this.auth.signInWithEmailAndPassword(correo,password).then((res) => {
@@ -51,9 +56,16 @@ export class FirebaseService {
 
     async guardarRegistro(email?: any,foto?: any) {
 
+      const image = await Camera.getPhoto({
+        quality: 90,
+        allowEditing: true,
+        resultType: CameraResultType.Uri
+      });
+ 
+
       let fotoData = {
         email: email,
-        foto: foto,
+        foto: image.webPath,
         fecha: this.myDate.toLocaleDateString() + " " + this.myDate.toLocaleTimeString()
       }
       
@@ -70,6 +82,21 @@ export class FirebaseService {
 
     getUserLogged(){
       return this.auth.authState;
+    }
+
+    async obtenerCosasLindas() {
+      try {
+        const snapshot = await this.firestore.collection('cosas_lindas').get().toPromise();
+        if (snapshot) {
+          const cosasLindas = snapshot.docs.map(doc => doc.data());
+          return cosasLindas;
+        } else {
+          throw new Error('El snapshot es undefined');
+        }
+      } catch (error) {
+        console.error('Error al obtener las cosas lindas:', error);
+        throw error;
+      }
     }
     
   }

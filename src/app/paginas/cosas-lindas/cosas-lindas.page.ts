@@ -10,10 +10,12 @@ import { FirebaseService } from 'src/app/servicios/firebase.service';
 export class CosasLindasPage implements OnInit {
 
   currentUserMail: string | null= ""; 
+  cosasLindas: any[] = [];
   constructor(public firebaseService: FirebaseService) { }
 
   ngOnInit() {
     this.obtenerUsuarioLoggeado();
+    this.obtenerCosasLindas();
   }
 
   addFoto(){
@@ -29,4 +31,15 @@ export class CosasLindasPage implements OnInit {
     })
   }
 
+  async obtenerCosasLindas() {
+    try {
+      const data = await this.firebaseService.obtenerCosasLindas();
+      if (data) {
+        this.cosasLindas = data;
+        console.log(this.cosasLindas);
+      }
+    } catch (error) {
+      console.error('Error al obtener las cosas lindas:', error);
+    }
+  }
 }
