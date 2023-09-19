@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FirebaseService } from 'src/app/servicios/firebase.service';
-
+import { FirebaseService } from '../../servicios/firebase.service';
+import { Camera, CameraResultType } from '@capacitor/camera';
 
 @Component({
   selector: 'app-cosas-lindas',
@@ -18,8 +18,13 @@ export class CosasLindasPage implements OnInit {
     this.obtenerCosasLindas();
   }
 
-  addFoto(){
-    this.firebaseService.guardarRegistro(this.currentUserMail,"x")
+  async agregarFoto(){
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: true,
+      resultType: CameraResultType.Uri
+    });
+    this.firebaseService.guardarRegistro(this.currentUserMail,image.webPath)
   }
 
   obtenerUsuarioLoggeado(){

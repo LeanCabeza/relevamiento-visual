@@ -56,16 +56,9 @@ export class FirebaseService {
 
     async guardarRegistro(email?: any,foto?: any) {
 
-      const image = await Camera.getPhoto({
-        quality: 90,
-        allowEditing: true,
-        resultType: CameraResultType.Uri
-      });
- 
-
       let fotoData = {
         email: email,
-        foto: image.webPath,
+        foto: foto,
         fecha: this.myDate.toLocaleDateString() + " " + this.myDate.toLocaleTimeString()
       }
       
