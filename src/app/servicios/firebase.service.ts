@@ -3,7 +3,6 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { NavController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Camera, CameraResultType } from '@capacitor/camera';
 import { map } from 'rxjs/operators'; // Importa el operador map
 
 

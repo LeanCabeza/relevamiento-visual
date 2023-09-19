@@ -1,18 +1,27 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {environment} from '../environments/environment';
-
-import { AngularFireModule } from "@angular/fire/compat";
+import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from "@angular/fire/compat/auth";
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
-import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
-import { provideAuth,getAuth } from '@angular/fire/auth';
-import { provideFirestore,getFirestore } from '@angular/fire/firestore';
-import { provideStorage,getStorage } from '@angular/fire/storage'; 
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+
+
+
+
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyBrts9hTdo-aQEfbKdvqme_fhjM4PfhKFU",
+  authDomain: "pps-2023-3661d.firebaseapp.com",
+  projectId: "pps-2023-3661d",
+  storageBucket: "pps-2023-3661d.appspot.com",
+  messagingSenderId: "759605409724",
+  appId: "1:759605409724:web:ad60abe94eff4a26585db9"
+};
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,12 +29,11 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
-    provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore()), 
-    provideStorage(() => getStorage())],
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireAuthModule
+    ],
   providers: [
-     {provide: FIREBASE_OPTIONS, useClass: IonicRouteStrategy, useValue: environment.firebaseConfig } ],
+     {provide: FIREBASE_OPTIONS, useClass: IonicRouteStrategy, useValue: firebaseConfig } ],
 
   bootstrap: [AppComponent],
 })
