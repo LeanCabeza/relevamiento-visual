@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { NavController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+
 
 
 
@@ -12,7 +14,10 @@ import { AlertController } from '@ionic/angular';
 
 export class AuthService {
 
-  constructor(public auth: AngularFireAuth,private navCtrl: NavController, public alertController: AlertController) { }
+  constructor(public auth: AngularFireAuth,
+              public navCtrl: NavController, 
+              public alertController: AlertController,
+              ) { }
 
 
   login(correo:any, password:any){
@@ -45,24 +50,5 @@ export class AuthService {
       });
       await alert.present();
     }
-}
-
-  /*async logout() {
-    const loading = await this.LoadingController.create({
-      message: 'Cerrando...',
-      showBackdrop: true,
-      spinner: "dots"
-    });
-    loading.present();
-    firebase.auth().signOut().then(() => {
-      setTimeout(() => {
-        this.navCtrl.navigateRoot('/login');
-        loading.dismiss();
-      }, 1500);
-
-    });
+    
   }
-
-  getEmailUser() {
-    return firebase.auth().currentUser?.email || null;
-  }*/
