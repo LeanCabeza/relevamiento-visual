@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { NavController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { map } from 'rxjs/operators'; // Importa el operador map
+import { map } from 'rxjs/operators';
 
 
 
@@ -54,11 +54,13 @@ export class FirebaseService {
     }
 
     async guardarRegistro(email?: any,foto?: any) {
+      this.myDate = new Date();
 
       let fotoData = {
         email: email,
         foto: foto,
-        fecha: this.myDate.toLocaleDateString() + " " + this.myDate.toLocaleTimeString()
+        fecha: this.myDate.toLocaleDateString() + " " + this.myDate.toLocaleTimeString(),
+        likes: 0 
       }
       
       try {
@@ -78,7 +80,7 @@ export class FirebaseService {
 
     async obtenerCosasLindas() {
       try {
-        return this.firestore.collection('cosas_lindas').snapshotChanges().pipe(
+        return this.firestore.collection('cosas_lindas', ref => ref.orderBy('fecha', 'desc')).snapshotChanges().pipe(
           map(actions => {
             return actions.map(a => {
               const data = a.payload.doc.data();
@@ -89,6 +91,36 @@ export class FirebaseService {
         );
       } catch (error) {
         console.error('Error al obtener las cosas lindas:', error);
+        throw error;
+      }
+    }
+
+    async buscarFotosPorEmail(email: any,coleccion: string) {
+      try {
+        return this.firestore.collection(coleccion, ref => ref.where('email', '==', email).orderBy("fecha","desc")).snapshotChanges().pipe(
+          map(actions => {
+            return actions.map(a => {
+              const data = a.payload.doc.data();
+              const id = a.payload.doc.id;
+              return Object.assign({}, data, { id });
+            });
+          })
+        );
+      } catch (error) {
+        console.error('Error al buscar fotos por email:', error);
+        throw error;
+      }
+    }
+
+    async actualizarRegistro(cosa: any) {
+      try {
+        const docId = cosa.id; // Obtén el ID del documento
+        delete cosa.id; // Elimina el campo 'id' para evitar problemas de actualización
+    
+        await this.firestore.collection('cosas_lindas').doc(docId).update(cosa);
+        console.log('Registro actualizado con ID: ', docId);
+      } catch (error) {
+        this.presentAlert('Error', 'Error al actualizar el registro');
         throw error;
       }
     }
