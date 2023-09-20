@@ -24,7 +24,7 @@ export class CosasLindasPage implements OnInit {
       allowEditing: true,
       resultType: CameraResultType.Uri
     });
-    this.firebaseService.guardarRegistro(this.currentUserMail,image.webPath)
+    this.firebaseService.guardarRegistro(this.currentUserMail,image.webPath,"cosas_lindas")
   }
 
   obtenerUsuarioLoggeado(){
@@ -38,7 +38,7 @@ export class CosasLindasPage implements OnInit {
 
   async obtenerCosasLindas() {
     try {
-      (await this.firebaseService.obtenerCosasLindas()).subscribe(cosasLindas => {
+      (await this.firebaseService.obtenerCosas("cosas_lindas")).subscribe(cosasLindas => {
         this.cosasLindas = cosasLindas;
       });
     } catch (error) {

@@ -1,13 +1,46 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>cosas_feas</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true" name="main">
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+  <ion-content [fullscreen]="true" name="main">
+    <ion-card *ngFor="let cosa of cosasFeas">
+      <img [src]="cosa.foto" alt="Imagen">
+      <ion-card-header>
+        <ion-card-title>{{ cosa.email }}</ion-card-title>
+        <ion-card-subtitle>{{ cosa.fecha }}</ion-card-subtitle>
+        <ion-button (click)="darMeGusta($event,cosa)">Me gusta ({{ cosa.likes }})</ion-button>
+      </ion-card-header>
+      <ion-card-content>
+      </ion-card-content>
+    </ion-card>
+
+    <br>
+    <hr>
+
+
+  <ion-footer class="sticky-footer">
     <ion-toolbar>
-      <ion-title size="large">cosas_feas</ion-title>
+      <ion-row>
+        <ion-col size="3">
+          <ion-button fill="clear" (click)="agregarFoto()">
+            <ion-img src="/assets/images/camera.png"></ion-img>
+          </ion-button>
+        </ion-col>
+        <ion-col size="3">
+          <ion-button fill="clear" (click)="obtenerCosasFeas()">
+            <ion-img src="/assets/images/gallery.png"></ion-img>
+          </ion-button>
+        </ion-col>
+        <ion-col size="3">
+          <ion-button fill="clear" (click)="mostrarMisFotos()">
+            <ion-img src="/assets/images/user.png"></ion-img>
+          </ion-button>
+        </ion-col>
+        <ion-col size="3">
+          <ion-button fill="clear">
+            <ion-img src="/assets/images/stats.png"></ion-img>
+          </ion-button>
+        </ion-col>
+      </ion-row>
     </ion-toolbar>
-  </ion-header>
+  </ion-footer>
+
 </ion-content>

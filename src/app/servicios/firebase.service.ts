@@ -53,7 +53,7 @@ export class FirebaseService {
       await alert.present();
     }
 
-    async guardarRegistro(email?: any,foto?: any) {
+    async guardarRegistro(email: any, foto: any, coleccion: string) {
       this.myDate = new Date();
 
       let fotoData = {
@@ -64,7 +64,7 @@ export class FirebaseService {
       }
       
       try {
-        const result = await this.firestore.collection('cosas_lindas').add(fotoData);
+        const result = await this.firestore.collection(coleccion).add(fotoData);
         console.log('Registro guardado con ID: ', result.id);
         this.presentAlert("Exito","'Registro guardado");
         return result.id;
@@ -78,9 +78,9 @@ export class FirebaseService {
       return this.auth.authState;
     }
 
-    async obtenerCosasLindas() {
+    async obtenerCosas(collection: string) {
       try {
-        return this.firestore.collection('cosas_lindas', ref => ref.orderBy('fecha', 'desc')).snapshotChanges().pipe(
+        return this.firestore.collection(collection, ref => ref.orderBy('fecha', 'desc')).snapshotChanges().pipe(
           map(actions => {
             return actions.map(a => {
               const data = a.payload.doc.data();
