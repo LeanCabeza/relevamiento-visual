@@ -11,6 +11,7 @@ import Chart from 'chart.js/auto';
 })
 export class CosasLindasPage implements OnInit {
 
+  showSpinner= false;
   mostrarGrafico = false;
   @ViewChild('pieChart') pieChart: ElementRef;
   @ViewChild('barChart') barChart: ElementRef;
@@ -45,8 +46,6 @@ export class CosasLindasPage implements OnInit {
     try {
       (await this.firebaseService.obtenerCosas("cosas_lindas")).subscribe(cosasLindas => {
         this.cosasLindas = cosasLindas;
-        this.crearGraficoTorta();
-        this.crearGraficoBarra();
       });
     } catch (error) {
       console.error('Error al obtener las cosas lindas:', error);
@@ -85,6 +84,7 @@ export class CosasLindasPage implements OnInit {
   }
 
   crearGraficoTorta() {
+    
     this.mostrarMisFotos();
     if (this.cosasLindas.length > 0) {
       const data = this.cosasLindas.map(cosa => cosa.likes);
@@ -115,38 +115,14 @@ export class CosasLindasPage implements OnInit {
     }
   }
 
-  crearGraficoBarra() {
-    if (this.cosasLindas.length > 0) {
-      const data = this.cosasLindas.map(cosa => cosa.likes);
-      const labels = this.cosasLindas.map(cosa => cosa.email);
-
-      const barChart = new Chart(this.barChart.nativeElement, {
-        type: 'bar',
-        data: {
-          labels: labels,
-          datasets: [{
-            label: 'Me gusta',
-            data: data,
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            borderColor: 'rgba(75, 192, 192, 1)',
-            borderWidth: 1,
-          }],
-        },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true,
-            },
-          },
-        },
-      });
-    }
-  }
-
   mostrarGraficos(){
+    this.showSpinner=true;
+    setTimeout(() => {
+      this.showSpinner=false;
+      this.crearGraficoTorta(); 
+    }, 1500);
     this.mostrarGrafico= true;
-    this.obtenerUsuarioLoggeado();
-    this.obtenerCosasLindas();
-    this.crearGraficoTorta();  }
+    
+  }
 
 }

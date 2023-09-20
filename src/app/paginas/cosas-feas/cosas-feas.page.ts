@@ -11,6 +11,7 @@ import { Chart } from 'chart.js';
 export class CosasFeasPage implements OnInit {
 
 
+  showSpinner= false;
   mostrarGrafico = false;
   @ViewChild('pieChart') pieChart: ElementRef;
   @ViewChild('barChart') barChart: ElementRef;
@@ -46,7 +47,6 @@ export class CosasFeasPage implements OnInit {
     try {
       (await this.firebaseService.obtenerCosas("cosas_feas")).subscribe(cosasLindas => {
         this.cosasFeas = cosasLindas;
-        this.crearGraficoBarra();
       });
     } catch (error) {
       console.error('Error al obtener las cosas lindas:', error);
@@ -114,10 +114,11 @@ export class CosasFeasPage implements OnInit {
   }
 
   mostrarGraficos(){
-    this.mostrarGrafico= true;
-    this.obtenerUsuarioLoggeado();
-    this.obtenerCosasFeas();
-    this.crearGraficoBarra();  
+    this.showSpinner=true;
+    setTimeout(() => {
+      this.showSpinner=false;
+      this.crearGraficoBarra(); 
+    }, 1500);
   }
 }
 

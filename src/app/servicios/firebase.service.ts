@@ -97,7 +97,7 @@ export class FirebaseService {
 
     async buscarFotosPorEmail(email: any,coleccion: string) {
       try {
-        return this.firestore.collection(coleccion, ref => ref.where('email', '==', email).orderBy("fecha","desc")).snapshotChanges().pipe(
+        return this.firestore.collection(coleccion, ref => ref.where('email', '==', email)).snapshotChanges().pipe(
           map(actions => {
             return actions.map(a => {
               const data = a.payload.doc.data();
