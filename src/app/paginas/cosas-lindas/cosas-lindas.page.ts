@@ -11,7 +11,7 @@ import Chart from 'chart.js/auto';
 })
 export class CosasLindasPage implements OnInit {
 
-  mostrarEstadisticas = false;
+  mostrarGrafico = false;
   @ViewChild('pieChart') pieChart: ElementRef;
   @ViewChild('barChart') barChart: ElementRef;
   currentUserMail: string | null= ""; 
@@ -85,6 +85,7 @@ export class CosasLindasPage implements OnInit {
   }
 
   crearGraficoTorta() {
+    this.mostrarMisFotos();
     if (this.cosasLindas.length > 0) {
       const data = this.cosasLindas.map(cosa => cosa.likes);
       const labels = this.cosasLindas.map(cosa => cosa.email);
@@ -142,12 +143,12 @@ export class CosasLindasPage implements OnInit {
     }
   }
 
-  mostrarEstadisticasClick() {
-    this.mostrarEstadisticas = true;
-  }
-
-  ocultarEstadisticasClick() {
-    this.mostrarEstadisticas = false;
+  mostrarFraficos(){
+    this.mostrarGrafico= true;
+    this.obtenerUsuarioLoggeado();
+    this.obtenerCosasLindas();
+    this.crearGraficoTorta();
+    this.crearGraficoBarra();
   }
 
 }

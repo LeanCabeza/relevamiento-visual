@@ -1,48 +1,52 @@
 <ion-content [fullscreen]="true" name="main">
-  <ion-card *ngFor="let cosa of cosasLindas">
-    <img [src]="cosa.foto" alt="Imagen">
-    <ion-card-header>
-      <ion-card-title>{{ cosa.email }}</ion-card-title>
-      <ion-card-subtitle>{{ cosa.fecha }}</ion-card-subtitle>
-      <ion-button (click)="darMeGusta($event,cosa)">Me gusta ({{ cosa.likes }})</ion-button>
-    </ion-card-header>
-    <ion-card-content>
-    </ion-card-content>
-  </ion-card>
 
+  <div *ngIf="this.mostrarGrafico">
     <h2>Grafico</h2>
     <!-- Gráfico de Torta -->
     <canvas #pieChart width="400" height="400"></canvas>
     <!-- Gráfico de Barras -->
     <canvas #barChart width="400" height="400"></canvas>
+  </div>
+  <div *ngIf="!this.mostrarGrafico">
+    <ion-card *ngFor="let cosa of cosasLindas">
+      <img [src]="cosa.foto" alt="Imagen">
+      <ion-card-header>
+        <ion-card-title>{{ cosa.email }}</ion-card-title>
+        <ion-card-subtitle>{{ cosa.fecha }}</ion-card-subtitle>
+        <ion-button (click)="darMeGusta($event,cosa)">Me gusta ({{ cosa.likes }})</ion-button>
+      </ion-card-header>
+      <ion-card-content>
+      </ion-card-content>
+    </ion-card>
+  </div>
 
-  <br>
-  <hr>
+    <br>
+    <hr>
 
-  <ion-footer class="sticky-footer">
-    <ion-toolbar>
-      <ion-row>
-        <ion-col size="3">
-          <ion-button fill="clear" (click)="agregarFoto()">
-            <ion-img src="/assets/images/camera.png"></ion-img>
-          </ion-button>
-        </ion-col>
-        <ion-col size="3">
-          <ion-button fill="clear" (click)="obtenerCosasLindas()">
-            <ion-img src="/assets/images/gallery.png"></ion-img>
-          </ion-button>
-        </ion-col>
-        <ion-col size="3">
-          <ion-button fill="clear" (click)="mostrarMisFotos()">
-            <ion-img src="/assets/images/user.png"></ion-img>
-          </ion-button>
-        </ion-col>
-        <ion-col size="3">
-          <ion-button fill="clear">
-            <ion-img src="/assets/images/stats.png"></ion-img>
-          </ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-toolbar>
-  </ion-footer>
-</ion-content>
+    <ion-footer class="sticky-footer">
+      <ion-toolbar>
+        <ion-row>
+          <ion-col size="3">
+            <ion-button fill="clear" (click)="agregarFoto(); this.mostrarGrafico = false">
+              <ion-img src="/assets/images/camera.png"></ion-img>
+            </ion-button>
+          </ion-col>
+          <ion-col size="3">
+            <ion-button fill="clear" (click)="obtenerCosasLindas(); this.mostrarGrafico = false">
+              <ion-img src="/assets/images/gallery.png"></ion-img>
+            </ion-button>
+          </ion-col>
+          <ion-col size="3">
+            <ion-button fill="clear" (click)="mostrarMisFotos(); this.mostrarGrafico = false">
+              <ion-img src="/assets/images/user.png"></ion-img>
+            </ion-button>
+          </ion-col>
+          <ion-col size="3">
+            <ion-button fill="clear" (click)="mostrarFraficos(); this.mostrarGrafico = true">
+              <ion-img src="/assets/images/stats.png"></ion-img>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-toolbar>
+    </ion-footer>
+  </ion-content>
