@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FirebaseService } from '../../servicios/firebase.service';
 import { Camera, CameraResultType } from '@capacitor/camera';
+import Chart from 'chart.js/auto';
+
 
 @Component({
   selector: 'app-cosas-lindas',
@@ -9,6 +11,9 @@ import { Camera, CameraResultType } from '@capacitor/camera';
 })
 export class CosasLindasPage implements OnInit {
 
+  mostrarEstadisticas = false;
+  @ViewChild('pieChart') pieChart: ElementRef;
+  @ViewChild('barChart') barChart: ElementRef;
   currentUserMail: string | null= ""; 
   cosasLindas: any[] = [];
   constructor(public firebaseService: FirebaseService) { }
@@ -40,6 +45,8 @@ export class CosasLindasPage implements OnInit {
     try {
       (await this.firebaseService.obtenerCosas("cosas_lindas")).subscribe(cosasLindas => {
         this.cosasLindas = cosasLindas;
+        this.crearGraficoTorta();
+        this.crearGraficoBarra();
       });
     } catch (error) {
       console.error('Error al obtener las cosas lindas:', error);
@@ -76,4 +83,71 @@ export class CosasLindasPage implements OnInit {
       // El usuario ya dio "Me gusta", puedes mostrar un mensaje de error o deshabilitar el botón
     }
   }
+
+  crearGraficoTorta() {
+    if (this.cosasLindas.length > 0) {
+      const data = this.cosasLindas.map(cosa => cosa.likes);
+      const labels = this.cosasLindas.map(cosa => cosa.email);
+
+      const pieChart = new Chart(this.pieChart.nativeElement, {
+        type: 'pie',
+        data: {
+          labels: labels,
+          datasets: [{
+            data: data,
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              // ... Agregar más colores si es necesario
+            ],
+            borderColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              // ... Agregar más colores si es necesario
+            ],
+            borderWidth: 1,
+          }],
+        },
+      });
+    }
+  }
+
+  crearGraficoBarra() {
+    if (this.cosasLindas.length > 0) {
+      const data = this.cosasLindas.map(cosa => cosa.likes);
+      const labels = this.cosasLindas.map(cosa => cosa.email);
+
+      const barChart = new Chart(this.barChart.nativeElement, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Me gusta',
+            data: data,
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1,
+          }],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+    }
+  }
+
+  mostrarEstadisticasClick() {
+    this.mostrarEstadisticas = true;
+  }
+
+  ocultarEstadisticasClick() {
+    this.mostrarEstadisticas = false;
+  }
+
 }

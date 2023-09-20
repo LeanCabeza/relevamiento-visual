@@ -1,20 +1,23 @@
 <ion-content [fullscreen]="true" name="main">
+  <ion-card *ngFor="let cosa of cosasLindas">
+    <img [src]="cosa.foto" alt="Imagen">
+    <ion-card-header>
+      <ion-card-title>{{ cosa.email }}</ion-card-title>
+      <ion-card-subtitle>{{ cosa.fecha }}</ion-card-subtitle>
+      <ion-button (click)="darMeGusta($event,cosa)">Me gusta ({{ cosa.likes }})</ion-button>
+    </ion-card-header>
+    <ion-card-content>
+    </ion-card-content>
+  </ion-card>
 
-  <ion-content [fullscreen]="true" name="main">
-    <ion-card *ngFor="let cosa of cosasLindas">
-      <img [src]="cosa.foto" alt="Imagen">
-      <ion-card-header>
-        <ion-card-title>{{ cosa.email }}</ion-card-title>
-        <ion-card-subtitle>{{ cosa.fecha }}</ion-card-subtitle>
-        <ion-button (click)="darMeGusta($event,cosa)">Me gusta ({{ cosa.likes }})</ion-button>
-      </ion-card-header>
-      <ion-card-content>
-      </ion-card-content>
-    </ion-card>
+  <h2>Grafico</h2>
+  <!-- Gráfico de Torta -->
+  <canvas #pieChart width="400" height="400"></canvas>
+  <!-- Gráfico de Barras -->
+  <canvas #barChart width="400" height="400"></canvas>
 
-    <br>
-    <hr>
-
+  <br>
+  <hr>
 
   <ion-footer class="sticky-footer">
     <ion-toolbar>
@@ -42,5 +45,4 @@
       </ion-row>
     </ion-toolbar>
   </ion-footer>
-
 </ion-content>
