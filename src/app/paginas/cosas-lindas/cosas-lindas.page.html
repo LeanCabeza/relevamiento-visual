@@ -1,12 +1,11 @@
 <ion-content [fullscreen]="true" name="main">
 
   <div *ngIf="this.mostrarGrafico">
-    <h2>Grafico</h2>
+    <h1 style="font-family: Mooli;"><strong>Grafico de torta</strong></h1>
     <!-- Gráfico de Torta -->
     <canvas #pieChart width="400" height="400"></canvas>
-    <!-- Gráfico de Barras -->
-    <canvas #barChart width="400" height="400"></canvas>
   </div>
+
   <div *ngIf="!this.mostrarGrafico">
     <ion-card *ngFor="let cosa of cosasLindas">
       <img [src]="cosa.foto" alt="Imagen">
@@ -42,7 +41,7 @@
             </ion-button>
           </ion-col>
           <ion-col size="3">
-            <ion-button fill="clear" (click)="mostrarFraficos(); this.mostrarGrafico = true">
+            <ion-button fill="clear" (click)="mostrarGraficos()">
               <ion-img src="/assets/images/stats.png"></ion-img>
             </ion-button>
           </ion-col>

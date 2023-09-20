@@ -112,12 +112,12 @@ export class FirebaseService {
       }
     }
 
-    async actualizarRegistro(cosa: any) {
+    async actualizarRegistro(cosa: any, coleccion: string) {
       try {
         const docId = cosa.id; // Obtén el ID del documento
         delete cosa.id; // Elimina el campo 'id' para evitar problemas de actualización
     
-        await this.firestore.collection('cosas_lindas').doc(docId).update(cosa);
+        await this.firestore.collection(coleccion).doc(docId).update(cosa);
         console.log('Registro actualizado con ID: ', docId);
       } catch (error) {
         this.presentAlert('Error', 'Error al actualizar el registro');

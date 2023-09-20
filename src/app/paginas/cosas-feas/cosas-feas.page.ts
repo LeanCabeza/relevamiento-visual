@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FirebaseService } from '../../servicios/firebase.service';
 import { Camera, CameraResultType } from '@capacitor/camera';
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-cosas-feas',
@@ -10,6 +11,9 @@ import { Camera, CameraResultType } from '@capacitor/camera';
 export class CosasFeasPage implements OnInit {
 
 
+  mostrarGrafico = false;
+  @ViewChild('pieChart') pieChart: ElementRef;
+  @ViewChild('barChart') barChart: ElementRef;
   currentUserMail: string | null= ""; 
   cosasFeas: any[] = [];
   constructor(public firebaseService: FirebaseService) { }
@@ -37,10 +41,12 @@ export class CosasFeasPage implements OnInit {
     })
   }
 
+
   async obtenerCosasFeas() {
     try {
-      (await this.firebaseService.obtenerCosas("cosas_feas")).subscribe(cosasFeas => {
-        this.cosasFeas = cosasFeas;
+      (await this.firebaseService.obtenerCosas("cosas_feas")).subscribe(cosasLindas => {
+        this.cosasFeas = cosasLindas;
+        this.crearGraficoBarra();
       });
     } catch (error) {
       console.error('Error al obtener las cosas lindas:', error);
@@ -72,9 +78,46 @@ export class CosasFeasPage implements OnInit {
       cosa.likesUsuarios.push(this.currentUserMail);
   
       // Actualizar el registro en Firestore
-      this.firebaseService.actualizarRegistro(cosa);
+      this.firebaseService.actualizarRegistro(cosa,"cosas_feas");
     } else {
       // El usuario ya dio "Me gusta", puedes mostrar un mensaje de error o deshabilitar el botón
     }
   }
+
+
+  crearGraficoBarra() {
+    if (this.cosasFeas.length > 0) {
+      const data = this.cosasFeas.map(cosa => cosa.likes);
+      const labels = this.cosasFeas.map(cosa => cosa.email);
+
+      const barChart = new Chart(this.barChart.nativeElement, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Me gusta',
+            data: data,
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1,
+          }],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+    }
+  }
+
+  mostrarGraficos(){
+    this.mostrarGrafico= true;
+    this.obtenerUsuarioLoggeado();
+    this.obtenerCosasFeas();
+    this.crearGraficoBarra();  
+  }
 }
+

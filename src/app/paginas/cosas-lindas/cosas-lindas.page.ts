@@ -78,7 +78,7 @@ export class CosasLindasPage implements OnInit {
       cosa.likesUsuarios.push(this.currentUserMail);
   
       // Actualizar el registro en Firestore
-      this.firebaseService.actualizarRegistro(cosa);
+      this.firebaseService.actualizarRegistro(cosa,"cosas_lindas");
     } else {
       // El usuario ya dio "Me gusta", puedes mostrar un mensaje de error o deshabilitar el botón
     }
@@ -143,12 +143,10 @@ export class CosasLindasPage implements OnInit {
     }
   }
 
-  mostrarFraficos(){
+  mostrarGraficos(){
     this.mostrarGrafico= true;
     this.obtenerUsuarioLoggeado();
     this.obtenerCosasLindas();
-    this.crearGraficoTorta();
-    this.crearGraficoBarra();
-  }
+    this.crearGraficoTorta();  }
 
 }
