@@ -4,6 +4,8 @@ import { NavController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { map } from 'rxjs/operators';
+import Swal from 'sweetalert2'
+
 
 
 
@@ -126,13 +128,33 @@ export class FirebaseService {
     }
 
     async logout() {
-      try {
-        await this.auth.signOut();
-        localStorage.removeItem("correo"); 
-        this.navCtrl.navigateRoot('/login'); 
-      } catch (error) {
-        console.error('Error al cerrar sesión:', error);
-      }
+
+      Swal.fire({
+        title: 'Estas seguro de que queres salir?',
+        text: "No hay vuelta atras eh!",
+        icon: 'warning',
+        heightAuto: false,
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, deseo salir'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          try {
+            this.auth.signOut();
+            localStorage.removeItem("correo"); 
+            this.navCtrl.navigateRoot('/login'); 
+          } catch (error) {
+            console.error('Error al cerrar sesión:', error);
+          }
+          Swal.fire({
+            title: 'Saliste con exito',
+            text: "Hasta pronto",
+            icon: 'success',
+            heightAuto: false
+          });
+        }
+      })
     }
     
   }
