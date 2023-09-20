@@ -1,5 +1,13 @@
 <ion-content [fullscreen]="true" name="main">
 
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <!-- Establece el tamaño del botón -->
+    <ion-fab-button (click)="logout()" color="danger" size="large">
+      <!-- Agrega aquí el icono o texto para cerrar sesión -->
+      <ion-icon name="log-out"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  
   <div *ngIf="this.mostrarGrafico">
     <h1 style="font-family: Mooli;margin: 15px;"><strong>Grafico de barras</strong></h1>    <!-- Gráfico de Torta -->
     <canvas #barChart width="400" height="600"></canvas>
@@ -11,7 +19,7 @@
       <ion-card-header>
         <ion-card-title>{{ cosa.email }}</ion-card-title>
         <ion-card-subtitle>{{ cosa.fecha }}</ion-card-subtitle>
-        <ion-button (click)="darMeGusta($event,cosa)">Me gusta ({{ cosa.likes }})</ion-button>
+        <ion-button color="danger" shape="round" (click)="darMeGusta($event,cosa)">Me desagrada <ion-icon name="flame-outline"></ion-icon>({{ cosa.likes }})</ion-button>
       </ion-card-header>
       <ion-card-content>
       </ion-card-content>

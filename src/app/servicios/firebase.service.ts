@@ -124,5 +124,15 @@ export class FirebaseService {
         throw error;
       }
     }
+
+    async logout() {
+      try {
+        await this.auth.signOut();
+        localStorage.removeItem("correo"); 
+        this.navCtrl.navigateRoot('/login'); 
+      } catch (error) {
+        console.error('Error al cerrar sesión:', error);
+      }
+    }
     
   }

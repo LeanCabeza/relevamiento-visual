@@ -95,7 +95,7 @@ export class CosasFeasPage implements OnInit {
         data: {
           labels: labels,
           datasets: [{
-            label: 'Me gusta',
+            label: 'Me Desagradas',
             data: data,
             backgroundColor: 'rgba(75, 192, 192, 0.2)',
             borderColor: 'rgba(75, 192, 192, 1)',
@@ -119,6 +119,10 @@ export class CosasFeasPage implements OnInit {
       this.showSpinner=false;
       this.crearGraficoBarra(); 
     }, 1500);
+  }
+
+  logout() {
+    this.firebaseService.logout();
   }
 }
 

@@ -1,5 +1,12 @@
 <ion-content>
   <div class="container">
+    <ion-fab vertical="top" horizontal="end" slot="fixed">
+      <!-- Establece el tamaño del botón -->
+      <ion-fab-button (click)="logout()" color="danger" size="large">
+        <!-- Agrega aquí el icono o texto para cerrar sesión -->
+        <ion-icon name="log-out"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
     <!-- <ion-fab vertical="top" horizontal="start">
       <ion-fab-button id="out-loading" size="large">
         <img src="/assets/background/salir.png">

@@ -84,7 +84,7 @@ export class CosasLindasPage implements OnInit {
   }
 
   crearGraficoTorta() {
-    
+
     this.mostrarMisFotos();
     if (this.cosasLindas.length > 0) {
       const data = this.cosasLindas.map(cosa => cosa.likes);
@@ -122,7 +122,10 @@ export class CosasLindasPage implements OnInit {
       this.crearGraficoTorta(); 
     }, 1500);
     this.mostrarGrafico= true;
-    
+  }
+
+  logout() {
+    this.firebaseService.logout();
   }
 
 }
