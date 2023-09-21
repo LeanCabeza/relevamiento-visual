@@ -1,16 +1,19 @@
+/* Establecemos el fondo de ion-content como un degradado */
 ion-content {
-    --background: linear-gradient(180deg, #ffe6b4 a9 0, #cddeff 50%, #ff8c8c 100%);
+    --background: linear-gradient(180deg, #ffe6b4, #cddeff 50%, #ff8c8c);
     background-repeat: no-repeat;
     background-size: 100px;
     background-position: center;
     position: relative;
-}
-
-h3{
+  }
+  
+  /* Establecemos la fuente para los encabezados h3 */
+  h3 {
     font-family: Mooli;
-}
-
-.container {
+  }
+  
+  /* Estilos para el contenedor principal */
+  .container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -18,65 +21,65 @@ h3{
     height: 100vh;
     padding: 1rem;
     background-color: #ddd1fe;
-}
-
-.cosas-lindas-btn {
+  }
+  
+  /* Estilos comunes para los botones "cosas-lindas-btn" y "cosas-feas-btn" */
+  .cosas-lindas-btn,
+  .cosas-feas-btn {
     flex-basis: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
+    border-radius: 20px;
+    border: 5px outset;
+    text-align: center;
+    margin-bottom: 10px;
+    height: 50vh;
+    transition: transform 0.3s, box-shadow 0.3s; /* Transiciones comunes */
+  }
+  
+  /* Estilos para el botón "cosas-lindas-btn" */
+  .cosas-lindas-btn {
     background-color: #86ddbc;
-    border-radius: 20px;
-    border: 5px outset;
-    text-align: center;
-    margin-bottom: 10px;
-    height: 50vh;
     box-shadow: 0px 0px 25px #86ddbc, 0px 0px 25px #86e2d1, 0px 0px 25px #afe3df;
-}
-
-.cosas-lindas-btn:active {
+  }
+  
+  .cosas-lindas-btn:active {
     transform: scale(0.9);
-    transition: transform 0.3s;
-    box-shadow: 0px 0px 25px #c3ffb4, 0px 0px 25px #c3ffb4, 0px 0px 25px #c3ffb4;
-}
-
-.cosas-feas-btn {
-    width: 100%;
-    flex-basis: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    box-shadow: 0px 0px 25px #c3ffb4;
+  }
+  
+  /* Estilos para el botón "cosas-feas-btn" */
+  .cosas-feas-btn {
     background-color: #ff8c8c;
-    border-radius: 20px;
-    border: 5px outset;
-    text-align: center;
-    margin-bottom: 10px;
-    height: 50vh;
     box-shadow: 0px 0px 25px #733c3c, 0px 0px 25px #733c3c, 0px 0px 25px #733c3c;
-}
-
-.cosas-feas-btn:active {
+  }
+  
+  .cosas-feas-btn:active {
     transform: scale(0.9);
-    transition: transform 0.3s;
-    box-shadow: 0px 0px 25px #ff3232, 0px 0px 25px #ff3232, 0px 0px 25px #ff3232;
-}
-
-.cosas-lindas-btn h2, .cosas-feas-btn h2 {
+    box-shadow: 0px 0px 25px #ff3232;
+  }
+  
+  /* Estilos para los encabezados h2 dentro de los botones */
+  .cosas-lindas-btn h2,
+  .cosas-feas-btn h2 {
     font-family: 'Fruinky', sans-serif;
     line-height: 14rem;
     border-radius: 15px;
     color: black;
     font-size: 30px;
     height: 100%;
-}
-
-.imagen-boton {
+  }
+  
+  /* Estilos para las imágenes dentro de los botones */
+  .imagen-boton {
     width: 150px;
     height: 150px;
-}
-
-.button-container {
+  }
+  
+  /* Estilos para el contenedor de botones */
+  .button-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -84,21 +87,25 @@ h3{
     top: 0;
     width: 100%;
     padding: 0 10px;
-}
-
-.segHome {
+  }
+  
+  /* Estilos para la sección "segHome" */
+  .segHome {
     --background: #b6dcfc;
     width: 100%;
     display: flex;
-}
-
-.expanded-button {
+  }
+  
+  /* Estilos para los botones expandibles */
+  .expanded-button {
     flex-grow: 1;
-}
-.expanded-button:active {
-    box-shadow: 0px 0px 25px #c3ffb4, 0px 0px 25px #c3ffb4, 0px 0px 25px #c3ffb4;
-}
-
-ion-segment:active {
+  }
+  
+  .expanded-button:active {
+    box-shadow: 0px 0px 25px #c3ffb4;
+  }
+  
+  /* Estilos para el segmento activo dentro de ion-segment */
+  ion-segment:active {
     filter: drop-shadow(2px 2px 4px rgba(68, 255, 0, 0.631));
-}
+  }
