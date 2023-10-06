@@ -19,7 +19,13 @@
       <ion-card-header>
         <ion-card-title>{{ cosa.email }}</ion-card-title>
         <ion-card-subtitle>{{ cosa.fecha }}</ion-card-subtitle>
-        <ion-button color="danger" shape="round" (click)="darMeGusta($event,cosa)">Me desagrada <ion-icon name="flame-outline"></ion-icon>({{ cosa.likes }})</ion-button>
+        <ion-button
+          [color]="usuarioYaDioLike(cosa) ? 'warning' : 'danger'"
+          shape="round"
+          (click)="darMeGusta($event, cosa)"
+        >
+          Me Desagrada <ion-icon name="flame-outline"></ion-icon>({{ cosa.likes }})
+        </ion-button>
       </ion-card-header>
       <ion-card-content>
       </ion-card-content>

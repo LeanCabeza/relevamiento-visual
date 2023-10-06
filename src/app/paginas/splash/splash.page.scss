@@ -1,64 +1,18 @@
-ion-content {
-  --overflow: hidden !important;
-  --overscroll-behavior-y: none !important;
-  --display: flex;
-  --background: rgb(207,169,232);
-  --background: linear-gradient(170deg, rgba(207,169,232,1) 0%, rgba(238,238,238,0.958420868347339) 50%, rgba(190,180,198,1) 100%);
-}
-
-h1{
-  font-family: Mooli;
-}
-.center {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
-
-.top-section,
-.bottom-section {
-  flex: 1;
+.fullscreen {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  overflow-y: hidden; 
+  padding: 0 !important; /* Elimina cualquier relleno interno del ion-content */
+  ion-content {
+    --background: transparent !important; /* Establece el fondo del ion-content como transparente */
+  }
 }
 
-.middle-section {
-  flex: 2; /* Puedes ajustar el valor según tus necesidades */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.custom-loader {
-  width: 50px;
-  height: 50px;
-  border: 4px solid transparent;
-  border-radius: 50%;
-  border-right-color: #766DF4;
-  animation: spin 1s linear infinite; /* Simplificado el nombre de la animación */
-}
-
-.custom-loader::before,
-.custom-loader::after {    
-  content: "";
-  position: absolute; /* Añadido para evitar desplazamiento del spinner */
+.responsive-gif {
   width: 100%;
   height: 100%;
-  border: inherit;
-  border-radius: inherit;
-  animation: spin 2s linear infinite; /* Simplificado el nombre de la animación */
-}
-
-.custom-loader::after {
-  margin: 8px;
-  animation-duration: 3s;
-}
-
-@keyframes spin { /* Definimos la animación solo una vez */
-  100% {
-    transform: rotate(1turn);
-  }
+  object-fit: cover; /* Asegura que la imagen cubra todo el espacio disponible sin distorsionar */
 }

@@ -42,6 +42,10 @@ export class CosasFeasPage implements OnInit {
     })
   }
 
+  usuarioYaDioLike(cosa: any): boolean {
+    console.log( "Contiene: ",cosa.likesUsuarios && cosa.likesUsuarios.includes(this.currentUserMail));
+    return cosa.likesUsuarios && cosa.likesUsuarios.includes(this.currentUserMail);
+  }
 
   async obtenerCosasFeas() {
     try {

@@ -68,10 +68,20 @@ export class FirebaseService {
       try {
         const result = await this.firestore.collection(coleccion).add(fotoData);
         console.log('Registro guardado con ID: ', result.id);
-        this.presentAlert("Exito","'Registro guardado");
+        Swal.fire({
+          title: 'Exito',
+          text: "Registro guardado",
+          icon: 'success',
+          heightAuto: false
+        });
         return result.id;
       } catch (error) {
-        this.presentAlert("Error","Error al guardar foto");
+        Swal.fire({
+          title: 'Error',
+          text: "Error al guardar foto",
+          icon: 'error',
+          heightAuto: false
+        });  
         throw error;
       }
     }
@@ -99,7 +109,7 @@ export class FirebaseService {
 
     async buscarFotosPorEmail(email: any,coleccion: string) {
       try {
-        return this.firestore.collection(coleccion, ref => ref.where('email', '==', email)).snapshotChanges().pipe(
+        return this.firestore.collection(coleccion, ref => ref.where('email', '==', email).orderBy('fecha', 'desc')).snapshotChanges().pipe(
           map(actions => {
             return actions.map(a => {
               const data = a.payload.doc.data();

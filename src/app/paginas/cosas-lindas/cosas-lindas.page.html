@@ -14,13 +14,19 @@
     <canvas #pieChart width="400" height="400"></canvas>
   </div>
 
-  <div *ngIf="!this.mostrarGrafico">
+  <div *ngIf="!mostrarGrafico">
     <ion-card *ngFor="let cosa of cosasLindas">
       <img [src]="cosa.foto" alt="Imagen">
       <ion-card-header>
         <ion-card-title>{{ cosa.email }}</ion-card-title>
         <ion-card-subtitle>{{ cosa.fecha }}</ion-card-subtitle>
-        <ion-button color="success" shape="round" (click)="darMeGusta($event,cosa)">Me gusta <ion-icon name="flame-outline"></ion-icon>({{ cosa.likes }})</ion-button>
+        <ion-button
+          [color]="usuarioYaDioLike(cosa) ? 'warning' : 'success'"
+          shape="round"
+          (click)="darMeGusta($event, cosa)"
+        >
+          Me gusta <ion-icon name="flame-outline"></ion-icon>({{ cosa.likes }})
+        </ion-button>
       </ion-card-header>
       <ion-card-content>
       </ion-card-content>

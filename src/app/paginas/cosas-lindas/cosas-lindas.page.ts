@@ -62,6 +62,11 @@ export class CosasLindasPage implements OnInit {
     }
   }
 
+  usuarioYaDioLike(cosa: any): boolean {
+    console.log( "Contiene: ",cosa.likesUsuarios && cosa.likesUsuarios.includes(this.currentUserMail));
+    return cosa.likesUsuarios && cosa.likesUsuarios.includes(this.currentUserMail);
+  }
+
   darMeGusta(event: Event,cosa: any) {
     event.preventDefault(); // Evitar acción predeterminada del botón
     event.stopPropagation(); // Detener propagación del evento
