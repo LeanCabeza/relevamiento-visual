@@ -88,37 +88,36 @@ export class CosasLindasPage implements OnInit {
     }
   }
 
-  crearGraficoTorta() {
 
+  crearGraficoTorta() {
     this.mostrarMisFotos();
     if (this.cosasLindas.length > 0) {
       const data = this.cosasLindas.map(cosa => cosa.likes);
       const labels = this.cosasLindas.map(cosa => cosa.email);
-
+  
+      // Declarar el tipo de coloresUnicos
+      const coloresUnicos: Record<string, string> = {};
+      const colores = labels.map(email => {
+        if (!coloresUnicos[email]) {
+          coloresUnicos[email] = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 0.2)`;
+        }
+        return coloresUnicos[email];
+      });
+  
       const pieChart = new Chart(this.pieChart.nativeElement, {
         type: 'pie',
         data: {
           labels: labels,
           datasets: [{
             data: data,
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              // ... Agregar más colores si es necesario
-            ],
-            borderColor: [
-              'rgba(255, 99, 132, 1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              // ... Agregar más colores si es necesario
-            ],
+            backgroundColor: colores,
+            borderColor: colores,
             borderWidth: 1,
           }],
         },
       });
     }
-  }
+  }  
 
   mostrarGraficos(){
     this.showSpinner=true;

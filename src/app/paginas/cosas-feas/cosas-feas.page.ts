@@ -93,7 +93,16 @@ export class CosasFeasPage implements OnInit {
     if (this.cosasFeas.length > 0) {
       const data = this.cosasFeas.map(cosa => cosa.likes);
       const labels = this.cosasFeas.map(cosa => cosa.email);
-
+  
+      // Declarar el tipo de coloresUnicos
+      const coloresUnicos: Record<string, string> = {};
+      const colores = labels.map(email => {
+        if (!coloresUnicos[email]) {
+          coloresUnicos[email] = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 0.2)`;
+        }
+        return coloresUnicos[email];
+      });
+  
       const barChart = new Chart(this.barChart.nativeElement, {
         type: 'bar',
         data: {
@@ -101,8 +110,8 @@ export class CosasFeasPage implements OnInit {
           datasets: [{
             label: 'Me Desagradas',
             data: data,
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            borderColor: 'rgba(75, 192, 192, 1)',
+            backgroundColor: colores, // Usar los colores generados
+            borderColor: colores, // Usar los colores generados
             borderWidth: 1,
           }],
         },
